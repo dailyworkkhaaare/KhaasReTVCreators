@@ -6,6 +6,10 @@
     <title>Khaas Re TV | Digital Content Revolution</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Shim process for browser compatibility to prevent 'process is not defined' errors -->
+    <script>
+      window.process = window.process || { env: {} };
+    </script>
     <style>
       html {
         scroll-behavior: smooth;
@@ -51,5 +55,7 @@
 </head>
   <body>
     <div id="root"></div>
+    <!-- Main Entry Point for Vite/React -->
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

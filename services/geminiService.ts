@@ -1,14 +1,16 @@
 import { GoogleGenAI } from "@google/genai";
 import { SYSTEM_INSTRUCTION } from '../constants';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const generateBotResponse = async (userMessage: string): Promise<string> => {
+  // Check for API Key existence before initialization to prevent errors
   if (!process.env.API_KEY) {
     return "I'm currently offline (API Key missing). Please check back later!";
   }
 
   try {
+    // Initialize inside the function to ensure the app loads even if the key is missing initially
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: userMessage,
