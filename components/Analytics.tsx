@@ -115,56 +115,96 @@ const Analytics: React.FC = () => {
 
         {/* Detailed Stats Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
-          {/* Chart */}
+          
+          {/* Enhanced Demographics Chart */}
           <AnimatedSection>
-            <div className="bg-slate-800/40 rounded-3xl p-8 border border-slate-700 h-full">
-              <h3 className="text-2xl font-bold text-white mb-6 text-center">Audience Age Demographics</h3>
-              <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={DEMOGRAPHICS}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={80}
-                      outerRadius={120}
-                      fill="#8884d8"
-                      paddingAngle={5}
-                      dataKey="value"
-                      stroke="none"
-                      isAnimationActive={true}
-                      animationDuration={1500}
-                      animationBegin={200}
-                      animationEasing="ease-out"
-                      activeIndex={activeIndex}
-                      activeOuterRadiusOffset={10}
-                      onMouseEnter={onPieEnter}
-                      onMouseLeave={onPieLeave}
-                    >
-                      {DEMOGRAPHICS.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={activeIndex === index ? HOVER_COLORS[index % HOVER_COLORS.length] : COLORS[index % COLORS.length]} 
-                          className="transition-all duration-300 ease-in-out cursor-pointer outline-none"
-                          stroke={activeIndex === index ? 'rgba(255,255,255,0.1)' : 'none'}
-                          strokeWidth={activeIndex === index ? 4 : 0}
+            <div className="bg-slate-900 rounded-3xl p-8 border border-slate-800 h-full relative overflow-hidden group hover:border-orange-500/30 transition-all duration-500 shadow-xl">
+              {/* Header */}
+              <div className="flex justify-between items-start mb-8 relative z-10">
+                <div>
+                  <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                    Age Demographics <Users size={20} className="text-orange-500" />
+                  </h3>
+                  <p className="text-slate-500 text-sm mt-1">Breakdown by age group</p>
+                </div>
+                <div className="bg-orange-600/10 border border-orange-500/20 px-3 py-1 rounded-full">
+                   <span className="text-orange-500 text-xs font-bold uppercase tracking-wider">Youth Centric</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-8 relative z-10">
+                {/* Chart Wrapper */}
+                <div className="h-[250px] w-full sm:w-1/2 relative">
+                   <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={DEMOGRAPHICS}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={65}
+                          outerRadius={90}
+                          paddingAngle={5}
+                          dataKey="value"
+                          stroke="none"
+                          isAnimationActive={true}
+                          animationDuration={1500}
+                          animationEasing="ease-out"
+                          onMouseEnter={onPieEnter}
+                          onMouseLeave={onPieLeave}
+                        >
+                          {DEMOGRAPHICS.map((entry, index) => (
+                            <Cell 
+                              key={`cell-${index}`} 
+                              fill={activeIndex === index ? HOVER_COLORS[index % HOVER_COLORS.length] : COLORS[index % COLORS.length]} 
+                              stroke={activeIndex === index ? 'rgba(255,255,255,0.2)' : 'none'}
+                              strokeWidth={activeIndex === index ? 4 : 0}
+                              className="transition-all duration-300 outline-none cursor-pointer"
+                            />
+                          ))}
+                        </Pie>
+                        <RechartsTooltip 
+                            contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)' }}
+                            itemStyle={{ color: '#f8fafc', fontSize: '12px', fontWeight: '600' }}
+                            cursor={false}
                         />
-                      ))}
-                    </Pie>
-                    <RechartsTooltip 
-                        contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#f8fafc', borderRadius: '8px' }}
-                        itemStyle={{ color: '#f8fafc' }}
-                        cursor={false}
-                    />
-                    <Legend verticalAlign="bottom" height={36} iconType="circle" />
-                  </PieChart>
-                </ResponsiveContainer>
+                      </PieChart>
+                   </ResponsiveContainer>
+                   
+                   {/* Center Stats */}
+                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+                      <span className="block text-4xl font-black text-white tracking-tighter">94%</span>
+                      <span className="block text-[10px] text-orange-500 uppercase tracking-widest font-bold">Youth</span>
+                   </div>
+                </div>
+
+                {/* Custom Legend/Stats */}
+                <div className="w-full sm:w-1/2 space-y-6">
+                    {DEMOGRAPHICS.map((demo, idx) => (
+                       <div key={idx} className="group/item cursor-default" onMouseEnter={() => setActiveIndex(idx)} onMouseLeave={() => setActiveIndex(undefined)}>
+                          <div className="flex justify-between items-end mb-2">
+                             <div className="flex items-center gap-2">
+                                <div className={`w-3 h-3 rounded-full ${idx === 0 ? 'bg-orange-500' : 'bg-slate-700'}`}></div>
+                                <span className={`text-sm font-bold ${idx === 0 ? 'text-white' : 'text-slate-400'}`}>{demo.name}</span>
+                             </div>
+                             <span className={`font-mono font-bold ${idx === 0 ? 'text-orange-500' : 'text-slate-500'}`}>{demo.value}%</span>
+                          </div>
+                          {/* Progress Bar */}
+                          <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                             <div 
+                                className={`h-full rounded-full transition-all duration-1000 ease-out ${idx === 0 ? 'bg-gradient-to-r from-orange-600 to-orange-400' : 'bg-slate-600'}`}
+                                style={{ width: `${demo.value}%` }}
+                             ></div>
+                          </div>
+                          {idx === 0 && <p className="text-[11px] text-slate-500 mt-2 font-medium leading-relaxed">
+                            Our primary audience segment (Gen Z & Millennials) driving engagement and trends.
+                          </p>}
+                       </div>
+                    ))}
+                </div>
               </div>
-              <div className="text-center mt-4">
-                <p className="text-slate-300 text-sm">
-                  <span className="text-orange-500 font-bold">94.1%</span> of our audience belongs to the 13-44 age group.
-                </p>
-              </div>
+              
+              {/* Decorative BG */}
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-orange-600/5 rounded-full blur-3xl pointer-events-none"></div>
             </div>
           </AnimatedSection>
 
