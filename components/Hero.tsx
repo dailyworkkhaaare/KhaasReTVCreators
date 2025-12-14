@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a 
-            href="https://yt.openinapp.co/y8lgw"
+            href="https://www.youtube.com/@KhaasReTV"
             target="_blank"
             rel="noreferrer"
             className="group relative px-8 py-4 bg-orange-600 hover:bg-orange-500 text-white font-bold text-lg rounded-full transition-all flex items-center gap-3 shadow-[0_0_20px_rgba(234,88,12,0.5)]"
