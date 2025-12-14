@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Users, TrendingUp, Zap, Heart, Star, Target, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const UpcomingSeries: React.FC = () => {
@@ -14,6 +14,24 @@ const UpcomingSeries: React.FC = () => {
     { name: "Bol Bhidu", followers: "3.5M+", image: "https://i.ibb.co/jv2mfBvr/d39cb1183748343-Y3-Jvc-Cwx-Mzgw-LDEw-ODAs-Mjcw-LDA.jpg" },
     { name: "Apali Aajji", followers: "2M+", image: "https://i.ibb.co/SX4VND2b/16.jpg" },
   ];
+
+  // Auto-scroll logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+        if (scrollContainerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+            // If we are near the end, scroll back to start
+            if (scrollLeft + clientWidth >= scrollWidth - 10) {
+                scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                // Scroll by approx one item width + gap
+                scrollContainerRef.current.scrollBy({ left: 180, behavior: 'smooth' });
+            }
+        }
+    }, 2500); // Scroll every 2.5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {

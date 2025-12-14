@@ -223,7 +223,7 @@ const Analytics: React.FC = () => {
               {/* Content */}
               <div className="relative z-10 p-8">
                 <div className="mb-8">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 backdrop-blur-sm mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-orange-500 text-orange-500 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(234,88,12,0.3)]">
                         <Star size={12} fill="currentColor" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Flagship Series</span>
                     </div>
@@ -254,7 +254,7 @@ const Analytics: React.FC = () => {
                     {/* Stat 3 - Full Width */}
                     <div className="col-span-2 bg-gradient-to-r from-orange-600/20 to-slate-900/60 backdrop-blur-md p-5 rounded-xl border border-white/10 flex items-center justify-between group/stat">
                          <div>
-                            <p className="text-orange-400 text-xs font-bold uppercase tracking-wider mb-1">Total Reach</p>
+                            <p className="text-orange-400 text-xs font-bold uppercase tracking-wider mb-1">Total Views</p>
                             <p className="text-3xl font-black text-white group-hover/stat:text-orange-100 transition-colors">5 Cr+</p>
                             <p className="text-[10px] text-slate-400">Cross-Platform Dominance</p>
                          </div>
@@ -293,8 +293,8 @@ const Analytics: React.FC = () => {
                    
                    <div className="relative z-10">
                       <div className="flex items-center gap-4 mb-8 border-b border-slate-800 pb-5">
-                           <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-yellow-500 shadow-sm">
-                              <Award size={22} />
+                           <div className="h-12 w-12 rounded-lg border border-slate-800 overflow-hidden shadow-sm shrink-0">
+                                <img src="https://i.ibb.co/TF9LjS5/ndtv-awards.jpg" alt="NDTV Marathi Awards" className="w-full h-full object-cover" />
                            </div>
                            <div>
                               <h4 className="font-bold text-white text-lg leading-tight">NDTV Marathi</h4>
@@ -326,8 +326,8 @@ const Analytics: React.FC = () => {
                    
                    <div className="relative z-10">
                       <div className="flex items-center gap-4 mb-8 border-b border-slate-800 pb-5">
-                           <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-yellow-500 shadow-sm">
-                              <Star size={22} fill="currentColor" className="text-yellow-500/20" />
+                           <div className="h-12 w-12 rounded-lg border border-slate-800 overflow-hidden shadow-sm shrink-0">
+                                <img src="https://i.ibb.co/CssdwCD2/mata-saman.jpg" alt="MaTa Sanman" className="w-full h-full object-cover" />
                            </div>
                            <div>
                               <h4 className="font-bold text-white text-lg leading-tight">MaTa Sanman</h4>

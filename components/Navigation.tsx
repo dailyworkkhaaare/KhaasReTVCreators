@@ -16,7 +16,6 @@ const Navigation: React.FC = () => {
   const navLinks = [
     { name: 'Home', href: '#' },
     { name: 'About', href: '#about' },
-    { name: 'Expertise', href: '#expertise' },
     { name: 'Content', href: '#portfolio' },
     { name: 'Upcoming', href: '#upcoming' },
     { name: 'Stats', href: '#analytics' },
@@ -50,26 +49,31 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-slate-950/90 backdrop-blur-lg border-b border-slate-800 py-4' : 'bg-transparent py-6'
-    }`}>
+    <nav 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-slate-950/90 backdrop-blur-lg border-b border-slate-800 py-4' : 'bg-transparent py-6'
+      }`}
+      aria-label="Main navigation"
+    >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <a 
           href="#" 
           onClick={(e) => handleNavClick(e, '#')}
-          className="text-2xl font-black text-white"
+          className="text-2xl font-black text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg px-2 -ml-2 transition-all"
+          aria-label="Khaas Re TV Home"
         >
           KHAAS RE <span className="text-orange-500">TV</span>
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-8" role="menubar">
           {navLinks.map((link) => (
             <a 
               key={link.name} 
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="text-slate-300 hover:text-orange-500 font-medium transition-colors text-sm uppercase tracking-wide cursor-pointer"
+              className="text-slate-300 hover:text-orange-500 font-medium transition-colors text-sm uppercase tracking-wide cursor-pointer focus:outline-none focus:text-white focus:border-b-2 focus:border-orange-500 py-1"
+              role="menuitem"
             >
               {link.name}
             </a>
@@ -78,7 +82,9 @@ const Navigation: React.FC = () => {
             href={subscribeLink}
             target="_blank"
             rel="noreferrer"
-            className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold text-sm transition-colors"
+            className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold text-sm transition-colors focus:outline-none focus:ring-4 focus:ring-red-600/50"
+            aria-label="Subscribe to Khaas Re TV on YouTube"
+            role="menuitem"
           >
             Subscribe
           </a>
@@ -86,22 +92,30 @@ const Navigation: React.FC = () => {
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-white"
+          className="md:hidden text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
         >
-          {isMobileMenuOpen ? <X /> : <Menu />}
+          {isMobileMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-slate-900 border-b border-slate-800 p-4 md:hidden flex flex-col gap-4 shadow-2xl">
+        <div 
+          id="mobile-menu"
+          className="absolute top-full left-0 right-0 bg-slate-900 border-b border-slate-800 p-4 md:hidden flex flex-col gap-4 shadow-2xl"
+          role="region"
+          aria-label="Mobile Menu"
+        >
           {navLinks.map((link) => (
             <a 
               key={link.name} 
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="text-slate-300 hover:text-white py-2 font-medium border-b border-slate-800/50 cursor-pointer"
+              className="text-slate-300 hover:text-white py-2 font-medium border-b border-slate-800/50 cursor-pointer focus:outline-none focus:bg-slate-800 focus:text-orange-500 px-2 rounded"
             >
               {link.name}
             </a>
@@ -110,7 +124,8 @@ const Navigation: React.FC = () => {
             href={subscribeLink}
             target="_blank"
             rel="noreferrer"
-            className="w-full text-center px-6 py-3 bg-red-600 text-white rounded-lg font-bold"
+            className="w-full text-center px-6 py-3 bg-red-600 text-white rounded-lg font-bold focus:outline-none focus:ring-4 focus:ring-red-600/50"
+            aria-label="Subscribe to Khaas Re TV on YouTube"
           >
             Subscribe Now
           </a>
