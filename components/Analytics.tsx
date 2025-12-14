@@ -1,34 +1,11 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, Legend, Sector } from 'recharts';
+import React, { useState } from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, Legend } from 'recharts';
 import { KEY_METRICS, DEMOGRAPHICS } from '../constants';
-import { Users, Eye, PlayCircle, Award, Youtube, Instagram, Facebook, Trophy, Sparkles, Star, TrendingUp } from 'lucide-react';
+import { Users, Eye, PlayCircle, Award, Youtube, Instagram, Facebook, Trophy, Star, TrendingUp } from 'lucide-react';
+import { AnimatedSection, useElementOnScreen } from './ScrollAnimation';
 
 const COLORS = ['#ea580c', '#334155']; // Orange-600, Slate-700
 const HOVER_COLORS = ['#fb923c', '#475569']; // Orange-400, Slate-600 (Brighter/Lighter)
-
-// Helper hook for scroll detection
-const useElementOnScreen = (options: IntersectionObserverInit) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.disconnect(); // Trigger once
-      }
-    }, options);
-
-    if (containerRef.current) observer.observe(containerRef.current);
-
-    return () => {
-      if (containerRef.current) observer.unobserve(containerRef.current);
-    };
-  }, [options]);
-
-  return [containerRef, isVisible] as const;
-};
 
 interface MetricCardProps {
   metric: typeof KEY_METRICS[0];
@@ -62,23 +39,6 @@ const MetricCard: React.FC<MetricCardProps> = ({ metric, index }) => {
   );
 };
 
-// Component for animated sections
-const AnimatedSection: React.FC<{ children: React.ReactNode; delay?: number }> = ({ children, delay = 0 }) => {
-  const [ref, isVisible] = useElementOnScreen({ threshold: 0.1 });
-  
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-1000 ease-out transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-      }`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
-};
-
 const Analytics: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
 
@@ -93,14 +53,16 @@ const Analytics: React.FC = () => {
   return (
     <section id="analytics" className="py-24 bg-slate-900 relative">
       <div className="container mx-auto px-4">
-        <div className="mb-16 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Our <span className="text-orange-500">Impact</span>
-          </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Dominating the digital space with unparalleled engagement and a loyal youth audience.
-          </p>
-        </div>
+        <AnimatedSection>
+          <div className="mb-16 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Our <span className="text-orange-500">Impact</span>
+            </h2>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+              Dominating the digital space with unparalleled engagement and a loyal youth audience.
+            </p>
+          </div>
+        </AnimatedSection>
 
         {/* Highlighted Metric: Total Audience Network */}
         <div className="max-w-4xl mx-auto mb-20">
@@ -208,34 +170,35 @@ const Analytics: React.FC = () => {
 
           {/* Vargamantri Highlight - Re-designed */}
           <AnimatedSection delay={200}>
-            <div className="relative rounded-3xl overflow-hidden group h-full min-h-[450px] flex flex-col justify-end border border-slate-800 shadow-2xl">
+            <div className="relative rounded-3xl overflow-hidden group h-full min-h-[500px] flex flex-col justify-end border border-slate-800 shadow-2xl bg-slate-900">
               {/* Background Image & Overlay */}
               <div className="absolute inset-0 z-0">
                  <img 
                     src="https://i.ibb.co/GfbJw24X/vargamantri1.jpg" 
                     alt="Vargamantri Web Series"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent"></div>
-                  <div className="absolute inset-0 bg-orange-600/5 mix-blend-overlay"></div>
+                  {/* Improved Gradient for Readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950/90 opacity-60"></div>
               </div>
 
               {/* Content */}
-              <div className="relative z-10 p-8">
-                <div className="mb-8">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-orange-500 text-orange-500 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(234,88,12,0.3)]">
+              <div className="relative z-10 p-6 md:p-8 flex flex-col gap-6">
+                <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-600/90 text-white backdrop-blur-md mb-3 shadow-lg border border-orange-500/50">
                         <Star size={12} fill="currentColor" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Flagship Series</span>
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">Vargamantri</h3>
-                    <p className="text-slate-400 text-sm md:text-base border-l-2 border-orange-500 pl-3">The political satire that captured the heart of Maharashtra.</p>
+                    <h3 className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight drop-shadow-md">Vargamantri</h3>
+                    <p className="text-slate-200 text-sm md:text-base border-l-4 border-orange-500 pl-3 font-medium drop-shadow-sm leading-relaxed">The political satire that captured the heart of Maharashtra.</p>
                 </div>
 
-                {/* Stats Grid - Modern Layout */}
+                {/* Stats Grid - Enhanced for Readability */}
                 <div className="grid grid-cols-2 gap-3">
                     {/* Stat 1 */}
-                    <div className="bg-slate-900/40 backdrop-blur-md p-4 rounded-xl border border-white/10 hover:border-orange-500/40 transition-all hover:bg-slate-800/60">
-                        <div className="flex items-center gap-2 mb-1 text-slate-400">
+                    <div className="bg-slate-900/60 backdrop-blur-md p-4 rounded-xl border border-white/10 hover:border-orange-500/40 transition-all hover:bg-slate-800/80">
+                        <div className="flex items-center gap-2 mb-1 text-slate-300">
                             <Youtube size={14} />
                             <span className="text-[10px] font-bold uppercase tracking-wider">Views</span>
                         </div>
@@ -243,8 +206,8 @@ const Analytics: React.FC = () => {
                     </div>
 
                     {/* Stat 2 */}
-                    <div className="bg-slate-900/40 backdrop-blur-md p-4 rounded-xl border border-white/10 hover:border-orange-500/40 transition-all hover:bg-slate-800/60">
-                        <div className="flex items-center gap-2 mb-1 text-slate-400">
+                    <div className="bg-slate-900/60 backdrop-blur-md p-4 rounded-xl border border-white/10 hover:border-orange-500/40 transition-all hover:bg-slate-800/80">
+                        <div className="flex items-center gap-2 mb-1 text-slate-300">
                             <Eye size={14} />
                             <span className="text-[10px] font-bold uppercase tracking-wider">Impressions</span>
                         </div>
@@ -252,11 +215,11 @@ const Analytics: React.FC = () => {
                     </div>
 
                     {/* Stat 3 - Full Width */}
-                    <div className="col-span-2 bg-gradient-to-r from-orange-600/20 to-slate-900/60 backdrop-blur-md p-5 rounded-xl border border-white/10 flex items-center justify-between group/stat">
+                    <div className="col-span-2 bg-gradient-to-r from-orange-600/30 to-slate-900/80 backdrop-blur-md p-5 rounded-xl border border-white/10 flex items-center justify-between group/stat hover:bg-slate-800/80 transition-all">
                          <div>
                             <p className="text-orange-400 text-xs font-bold uppercase tracking-wider mb-1">Total Views</p>
                             <p className="text-3xl font-black text-white group-hover/stat:text-orange-100 transition-colors">5 Cr+</p>
-                            <p className="text-[10px] text-slate-400">Cross-Platform Dominance</p>
+                            <p className="text-[10px] text-slate-300">Cross-Platform Dominance</p>
                          </div>
                          <div className="bg-orange-500/20 p-3 rounded-full text-orange-500 group-hover/stat:bg-orange-500 group-hover/stat:text-white transition-all shadow-lg">
                             <TrendingUp size={24} />

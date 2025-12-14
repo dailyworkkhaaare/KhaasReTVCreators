@@ -7,6 +7,7 @@ import Portfolio from './components/Portfolio';
 import UpcomingSeries from './components/UpcomingSeries';
 import Analytics from './components/Analytics';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <UpcomingSeries />
       </main>
 
+      <ScrollToTop />
       <Footer />
     </div>
   );
