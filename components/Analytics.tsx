@@ -341,7 +341,7 @@ const Analytics: React.FC = () => {
                       <ul className="space-y-5">
                          <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 group/item">
                             <span className="font-bold text-white group-hover/item:text-yellow-400 transition-colors">Sanjay Kamble</span>
-                            <span className="text-slate-500 text-sm border-l-2 border-slate-800 pl-3 sm:border-l-0 sm:pl-0">Best Direction</span>
+                            <span className="text-slate-500 text-sm border-l-2 border-slate-800 pl-3 sm:border-l-0 sm:pl-0">Best Writer</span>
                         </li>
                         <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 group/item">
                             <span className="font-bold text-white group-hover/item:text-yellow-400 transition-colors">Vargamantri</span>
@@ -349,7 +349,7 @@ const Analytics: React.FC = () => {
                         </li>
                         <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 group/item">
                             <span className="font-bold text-white group-hover/item:text-yellow-400 transition-colors">Sanjay Kamble</span>
-                            <span className="text-slate-500 text-sm border-l-2 border-slate-800 pl-3 sm:border-l-0 sm:pl-0">Best Direction (Web Series)</span>
+                            <span className="text-slate-500 text-sm border-l-2 border-slate-800 pl-3 sm:border-l-0 sm:pl-0">Best Direction</span>
                         </li>
                       </ul>
                    </div>
